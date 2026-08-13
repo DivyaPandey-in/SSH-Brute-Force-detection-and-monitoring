@@ -1,2 +1,193 @@
-# SSH-Brute-Force-detection-and-monitoring
-SSH Brute Force Detection and Alerting using Splunk SIEM
+# 🔐 SSH Brute Force Detection & Alerting using Splunk
+
+## 📌 Project Overview
+
+This project demonstrates a **SIEM-based SSH brute-force detection use case** using **Splunk**.
+
+The project was developed in a controlled cybersecurity lab environment to monitor Linux SSH authentication logs, identify repeated failed login attempts, and generate an automated alert when the defined detection threshold is reached.
+
+The project focuses on the basic SOC Analyst workflow:
+
+**Log Monitoring → Detection → Alert Generation**
+
+---
+
+## 🎯 Project Objectives
+
+* Monitor Linux SSH authentication logs using Splunk.
+* Detect repeated failed SSH login attempts.
+* Identify the source IP and targeted user.
+* Create a detection query using SPL.
+* Configure an automated Splunk alert.
+* Understand the basic SIEM monitoring workflow.
+
+---
+
+## 🛠️ Tools & Technologies
+
+* **Splunk SIEM**
+* **Kali Linux**
+* **Linux**
+* **SSH**
+* **SPL (Search Processing Language)**
+
+---
+
+## 🔎 Detection Use Case
+
+### SSH Brute Force Detection
+
+The detection identifies **3 or more failed SSH authentication attempts from the same source IP against a user account**.
+
+Repeated failed authentication attempts can indicate potential brute-force activity and should be monitored by a SOC team.
+
+---
+
+## 🔄 Detection Workflow
+
+```text
+Linux SSH Authentication Logs
+            ↓
+        Splunk SIEM
+            ↓
+        SPL Query
+            ↓
+   Failed SSH Authentication
+            ↓
+      Count Attempts
+            ↓
+       Threshold ≥ 3
+            ↓
+      Splunk Alert
+```
+
+---
+
+## 🔍 SPL Detection Query
+
+```spl
+index=* "Failed password"
+| stats count by src_ip, user
+| where count >= 3
+| sort - count
+```
+
+> **Note:** The exact field names may vary depending on the log source and field extraction configuration in Splunk.
+
+---
+
+## 🚨 Alert Configuration
+
+A Splunk alert was configured for the SSH brute-force detection use case.
+
+### Alert Condition
+
+* Monitor failed SSH authentication attempts.
+* Group events based on source IP and user.
+* Apply a threshold of **3 or more failed attempts**.
+* Generate a Splunk alert when the threshold is reached.
+
+---
+
+## ⚙️ Project Implementation
+
+### Step 1 — Log Monitoring
+
+Linux SSH authentication logs were monitored using Splunk.
+
+### Step 2 — Detection Query
+
+An SPL query was created to identify repeated failed SSH authentication attempts.
+
+### Step 3 — Detection Threshold
+
+A threshold of **3 or more failed attempts** was applied.
+
+### Step 4 — Alert
+
+A Splunk alert was configured to identify activity meeting the detection condition.
+
+---
+
+# 📸 Screenshots
+
+## 1. Splunk Search Query
+
+This screenshot shows the SPL query used for detecting failed SSH authentication attempts.
+
+![Splunk Search Query](./screenshots/01-splunk-search.png)
+
+---
+
+## 2. Failed SSH Authentication Events
+
+This screenshot shows the failed SSH authentication events collected and displayed in Splunk.
+
+![Failed SSH Authentication Events](./screenshots/02-failed-ssh-events.png)
+
+---
+
+## 3. Detection Results
+
+This screenshot shows the detection results after applying the configured threshold.
+
+![Detection Results](./screenshots/03-detection-results.png)
+
+---
+
+## 4. Splunk Alert
+
+This screenshot shows the configured Splunk alert for SSH brute-force detection.
+
+![Splunk Alert](./screenshots/04-splunk-alert.png)
+
+---
+
+## 🧠 SOC Analyst Skills Demonstrated
+
+* SIEM Monitoring
+* Splunk
+* SPL
+* Linux Log Analysis
+* SSH Authentication Monitoring
+* Security Event Monitoring
+* Detection Rule Creation
+* Alert Configuration
+* Brute Force Detection
+* Basic SOC Operations
+
+---
+
+## 🛡️ MITRE ATT&CK Mapping
+
+| Technique   | MITRE ATT&CK ID |
+| ----------- | --------------- |
+| Brute Force | **T1110**       |
+
+This detection use case is associated with the MITRE ATT&CK **Brute Force** technique.
+
+---
+
+## 📈 Project Outcome
+
+This project provided hands-on experience with using **Splunk as a SIEM platform** to monitor authentication logs, create a detection rule, apply a threshold, and generate an automated alert for potentially suspicious SSH authentication activity.
+
+---
+
+## 📚 Key Learning
+
+Through this project, I gained practical understanding of:
+
+* Monitoring authentication logs in a SIEM.
+* Using SPL to search and analyze security events.
+* Creating basic security detection logic.
+* Applying detection thresholds.
+* Configuring SIEM alerts.
+* Understanding a basic SOC monitoring workflow.
+* Mapping a security detection use case to MITRE ATT&CK.
+
+---
+
+## ⚠️ Disclaimer
+
+This project was created in a controlled lab environment for educational and cybersecurity learning purposes. No unauthorized systems were targeted.
